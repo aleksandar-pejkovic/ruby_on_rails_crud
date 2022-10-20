@@ -1,14 +1,27 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Friend list</h1>
-
-<div id="friends">
+<% if user_signed_in? %>
+  <p style="color: green"><%= notice %></p>
   <% @friends.each do |friend| %>
-    <%= render friend %>
-    <p>
-      <%= link_to "Show this friend", friend %>
-    </p>
+    <% if friend.user == current_user %>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"><%= friend.first_name %> <%= friend.last_name %></h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            <td><%= friend.email %></td>
+          </h6>
+          <p class="card-text">
+            <td>Phone number: <%= friend.phone %></td>
+            <td>User: <%= friend.user_id %></td>
+          </p>
+          <p>
+            <%= link_to "Show this friend", friend %>
+          </p>
+        </div>
+      </div>
+      <br/>
+    <% end %>
   <% end %>
-</div>
-
-<%= link_to "New friend", new_friend_path %>
+  <%= link_to "New friend", new_friend_path, class: "btn btn-secondary" %>
+<% else %>
+  <h1>Hello Friend!</h1>
+  <p>This is your FRIENDS app</p>
+<% end %>
